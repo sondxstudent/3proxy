@@ -59,9 +59,10 @@ chmod +x setup_3proxy_ipv6_whitelist.sh
 
 
 -----
-----
 fix giới hạn  rồi thêm wl
+
 ulimit -n 65535
+
 ----
 #5. Nếu muốn thêm WL example ip: 203.0.113.45
 
