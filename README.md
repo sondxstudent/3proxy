@@ -3,15 +3,21 @@
 Bước 0:
 
 sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo
+
 sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo
+
 sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
+
 echo "sslverify=false" >> /etc/yum.conf
 
 ## Bước 1. Cấu hình địa chỉ IPv6 vào máy chủ bằng lệnh:
 
 echo "IPV6_FAILURE_FATAL=no
+
 IPV6_ADDR_GEN_MODE=stable-privacy
+
 IPV6ADDR=2001:df7:c600:6:f816:3eff:fe7a:7839/64
+
 IPV6_DEFAULTGW=2001:df7:c600:6::1" >> /etc/sysconfig/network-scripts/ifcfg-eth0
 
 service network restart
@@ -50,11 +56,22 @@ chmod +x setup_3proxy_ipv6_whitelist.sh
 /bin/bash setup_3proxy_ipv6_whitelist.sh
 
 
+
+
+-----
+----
+fix giới hạn  rồi thêm wl
+ulimit -n 65535
+----
 #5. Nếu muốn thêm WL example ip: 203.0.113.45
 
 echo "203.0.113.45" >> /usr/local/etc/3proxy/whitelist.txt
+
 pkill 3proxy
+
 /usr/local/etc/3proxy/bin/3proxy /usr/local/etc/3proxy/3proxy.cfg
+
+
 
 
 
