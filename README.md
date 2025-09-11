@@ -27,3 +27,26 @@ Lấy thông tin tài khoản tại đường dẫn /home/cloudfly. Mở file pr
 
 Để cài đặt Proxy không cần username và password thì thay lệnh ở bước 2 thành lệnh dưới
 curl -sO https://raw.githubusercontent.com/sondxstudent/3proxy/main/ipv6-with-port-none-password.sh && chmod +x ipv6-with-port-none-password.sh && bash ipv6-with-port-none-password.sh
+
+
+----WL ip 09/2025
+# 1. Tải script về VPS
+curl -fsSLO https://raw.githubusercontent.com/sondxstudent/3proxy/main/setup_3proxy_ipv6_whitelist.sh
+
+# 2. Đảm bảo file không dính CRLF (nếu có, chuyển sang LF)
+sed -i 's/\r$//' setup_3proxy_ipv6_whitelist.sh
+
+# 3. Cấp quyền thực thi
+chmod +x setup_3proxy_ipv6_whitelist.sh
+
+# 4. Chạy script bằng bash
+/bin/bash setup_3proxy_ipv6_whitelist.sh
+
+#5. Nếu muốn thêm WL example ip: 203.0.113.45
+sed -i '/^deny \*/i allow * 203.0.113.45' /usr/local/etc/3proxy/3proxy.cfg
+Sau đó reset
+pkill 3proxy || true
+/usr/local/etc/3proxy/bin/3proxy /usr/local/etc/3proxy/3proxy.cfg
+
+
+
