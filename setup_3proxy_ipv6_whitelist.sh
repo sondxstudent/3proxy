@@ -5,14 +5,14 @@ set -o pipefail
 
 ### ====== CẤU HÌNH CƠ BẢN ======
 WORKDIR="/home/cloudfly"
-WORKDATA="${WORKDIR}/data.txt"           # Lưu danh sách IP4/PORT/IP6
+WORKDATA="${WORKDIR}/data.txt"           # Lưu danh sách IP4/PORT/IPv6
 THROTTLE_PORTS=2000                       # Số port muốn tạo (tối đa)
 MAX_FD=65535                              # ulimit -n
 EPHEMERAL_START=49152
 EPHEMERAL_END=65535
 
-# Danh sách IP public được phép truy cập proxy (whitelist)
-WHITELIST=("175.100.11.235" "1.54.101.65")
+# File chứa whitelist IP (mỗi IP một dòng)
+WHITELIST_FILE="/usr/local/etc/3proxy/whitelist.txt"
 
 ### ====== HÀM PHỤ TRỢ ======
 ipv6_tail() {
@@ -129,7 +129,6 @@ stacksize 6291456
 flush
 HDR
 
-  # chạy với nobody nếu có (an toàn hơn); fallback 65535
   if id nobody &>/dev/null; then
     echo "setgid $(id -g nobody)"
     echo "setuid $(id -u nobody)"
@@ -139,13 +138,13 @@ HDR
   fi
 
   echo "auth iponly"
-  # whitelist IP
-  for ip in "${WHITELIST[@]}"; do
-    echo "allow * ${ip}"
-  done
+  if [[ -f ${WHITELIST_FILE} ]]; then
+    while read -r ip; do
+      [[ -n "$ip" ]] && echo "allow * $ip"
+    done < ${WHITELIST_FILE}
+  fi
   echo "deny *"
 
-  # Sinh các dòng proxy theo data
   while IFS='/' read -r ip4 port ip6full; do
     echo "proxy -6 -n -a -p${port} -i${ip4} -e${ip6full}"
     echo "flush"
@@ -184,14 +183,6 @@ pkill 3proxy >/dev/null 2>&1 || true
 
 echo
 echo "================= HOÀN TẤT ================="
-echo "Whitelist IP:"
-printf ' - %s\n' "${WHITELIST[@]}"
+echo "Whitelist IP file: ${WHITELIST_FILE}"
+echo "Để thêm IP mới: echo 'x.x.x.x' >> ${WHITELIST_FILE} && pkill 3proxy && /usr/local/etc/3proxy/bin/3proxy ${CFG}"
 echo "Proxy list (ip:port): ${OUT}"
-echo "Lưu ý:"
-echo "- Chỉ các IP trong whitelist mới dùng được; không cần user/pass."
-echo "- Nếu client đổi IP, bạn thêm IP mới vào mảng WHITELIST trong script rồi chạy lại, hoặc sửa trực tiếp ${CFG} (thêm 'allow * <IP>') và restart 3proxy."
-
-
-
-
-
