@@ -43,9 +43,8 @@ chmod +x setup_3proxy_ipv6_whitelist.sh
 /bin/bash setup_3proxy_ipv6_whitelist.sh
 
 #5. Nếu muốn thêm WL example ip: 203.0.113.45
-sed -i '/^deny \*/i allow * 203.0.113.45' /usr/local/etc/3proxy/3proxy.cfg
-Sau đó reset
-pkill 3proxy || true
+echo "203.0.113.45" >> /usr/local/etc/3proxy/whitelist.txt
+pkill 3proxy
 /usr/local/etc/3proxy/bin/3proxy /usr/local/etc/3proxy/3proxy.cfg
 
 
