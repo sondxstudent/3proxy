@@ -1,6 +1,7 @@
 # Hướng dẫn cài đặt Proxy IPv6 trên Cloud Server của CloudFly
 Để cài đặt Proxy theo range IPv6 tại CloudFly trên máy chủ CentOS 7.9 thì mình thực hiện các bước sau ạ:
 Bước 0:
+
 sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo
 sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo
 sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
@@ -45,9 +46,12 @@ sed -i 's/\r$//' setup_3proxy_ipv6_whitelist.sh
 chmod +x setup_3proxy_ipv6_whitelist.sh
 
 # 4. Chạy script bằng bash
+
 /bin/bash setup_3proxy_ipv6_whitelist.sh
 
+
 #5. Nếu muốn thêm WL example ip: 203.0.113.45
+
 echo "203.0.113.45" >> /usr/local/etc/3proxy/whitelist.txt
 pkill 3proxy
 /usr/local/etc/3proxy/bin/3proxy /usr/local/etc/3proxy/3proxy.cfg
