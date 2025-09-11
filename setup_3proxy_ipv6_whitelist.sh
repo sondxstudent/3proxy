@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -e
+set -u
+set -o pipefail
 
 ### ====== CẤU HÌNH CƠ BẢN ======
 WORKDIR="/home/cloudfly"
@@ -129,11 +131,11 @@ HDR
 
   # chạy với nobody nếu có (an toàn hơn); fallback 65535
   if id nobody &>/dev/null; then
-    echo "setuid $(id -u nobody)"
     echo "setgid $(id -g nobody)"
+    echo "setuid $(id -u nobody)"
   else
-    echo "setuid 65535"
     echo "setgid 65535"
+    echo "setuid 65535"
   fi
 
   echo "auth iponly"
@@ -188,6 +190,7 @@ echo "Proxy list (ip:port): ${OUT}"
 echo "Lưu ý:"
 echo "- Chỉ các IP trong whitelist mới dùng được; không cần user/pass."
 echo "- Nếu client đổi IP, bạn thêm IP mới vào mảng WHITELIST trong script rồi chạy lại, hoặc sửa trực tiếp ${CFG} (thêm 'allow * <IP>') và restart 3proxy."
+
 
 
 
