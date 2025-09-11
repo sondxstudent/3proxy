@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -eu
 
 ### ====== CẤU HÌNH CƠ BẢN ======
 WORKDIR="/home/cloudfly"
@@ -188,5 +188,6 @@ echo "Proxy list (ip:port): ${OUT}"
 echo "Lưu ý:"
 echo "- Chỉ các IP trong whitelist mới dùng được; không cần user/pass."
 echo "- Nếu client đổi IP, bạn thêm IP mới vào mảng WHITELIST trong script rồi chạy lại, hoặc sửa trực tiếp ${CFG} (thêm 'allow * <IP>') và restart 3proxy."
+
 
 
