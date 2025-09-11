@@ -1,5 +1,10 @@
 # Hướng dẫn cài đặt Proxy IPv6 trên Cloud Server của CloudFly
 Để cài đặt Proxy theo range IPv6 tại CloudFly trên máy chủ CentOS 7.9 thì mình thực hiện các bước sau ạ:
+Bước 0:
+sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo
+sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo
+sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
+echo "sslverify=false" >> /etc/yum.conf
 
 ## Bước 1. Cấu hình địa chỉ IPv6 vào máy chủ bằng lệnh:
 
@@ -20,14 +25,14 @@ Nếu ping trả về gói tin thì cấu hình IPv6 đã thành công và chuy�
 
 curl -sO https://raw.githubusercontent.com/sondxstudent/3proxy/main/ipv6-with-port-password.sh && chmod +x ipv6-with-port-password.sh && bash ipv6-with-port-password.sh
 
+Để cài đặt Proxy không cần username và password thì thay lệnh ở bước 2 thành lệnh dưới
+curl -sO https://raw.githubusercontent.com/sondxstudent/3proxy/main/ipv6-with-port-none-password.sh && chmod +x ipv6-with-port-none-password.sh && bash ipv6-with-port-none-password.sh
+
 
 ## Bước 3: Lấy thông tin tài khoản
 
 Lấy thông tin tài khoản tại đường dẫn /home/cloudfly. Mở file proxy.txt để lấy các thông tin đăng nhập.
-
-Để cài đặt Proxy không cần username và password thì thay lệnh ở bước 2 thành lệnh dưới
-curl -sO https://raw.githubusercontent.com/sondxstudent/3proxy/main/ipv6-with-port-none-password.sh && chmod +x ipv6-with-port-none-password.sh && bash ipv6-with-port-none-password.sh
-
+cat /home/cloudfly/proxy.txt
 
 ----WL ip 09/2025
 # 1. Tải script về VPS
