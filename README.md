@@ -1,6 +1,6 @@
 # Hướng dẫn cài đặt Proxy IPv6 trên Cloud Server của CloudFly
 Để cài đặt Proxy theo range IPv6 tại CloudFly trên máy chủ CentOS 7.9 thì mình thực hiện các bước sau ạ:
-Bước 0:
+## Bước 0.
 
 sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo
 
@@ -28,7 +28,7 @@ service network restart
 
 Nếu ping trả về gói tin thì cấu hình IPv6 đã thành công và chuyển sang bước 2
 
-## Bước 2. Cài đặt proxy vào máy chủ với Range /112 như sau
+## Cách I:. Cài đặt proxy vào máy chủ với Range /112 như sau
 
 curl -sO https://raw.githubusercontent.com/sondxstudent/3proxy/main/ipv6-with-port-password.sh && chmod +x ipv6-with-port-password.sh && bash ipv6-with-port-password.sh
 
@@ -36,12 +36,12 @@ curl -sO https://raw.githubusercontent.com/sondxstudent/3proxy/main/ipv6-with-po
 curl -sO https://raw.githubusercontent.com/sondxstudent/3proxy/main/ipv6-with-port-none-password.sh && chmod +x ipv6-with-port-none-password.sh && bash ipv6-with-port-none-password.sh
 
 
-## Bước 3: Lấy thông tin tài khoản
+## Bước: Lấy thông tin proxy
 
-Lấy thông tin tài khoản tại đường dẫn /home/cloudfly. Mở file proxy.txt để lấy các thông tin đăng nhập.
 cat /home/cloudfly/proxy.txt
 
-----WL ip 09/2025
+## Cách II: white list IP 09/2025
+
 # 1. Tải script về VPS
 curl -fsSLO https://raw.githubusercontent.com/sondxstudent/3proxy/main/setup_3proxy_ipv6_whitelist.sh
 
@@ -54,9 +54,6 @@ chmod +x setup_3proxy_ipv6_whitelist.sh
 # 4. Chạy script bằng bash
 
 /bin/bash setup_3proxy_ipv6_whitelist.sh
-
-
-
 
 -----
 fix giới hạn  rồi thêm wl
