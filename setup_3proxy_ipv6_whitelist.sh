@@ -17,8 +17,7 @@ WHITELIST_FILE="/usr/local/etc/3proxy/whitelist.txt"
 if [[ ! -f ${WHITELIST_FILE} ]]; then
   mkdir -p "$(dirname ${WHITELIST_FILE})"
   cat > ${WHITELIST_FILE} <<EOF
-175.100.11.235
-1.54.101.65
+
 EOF
   echo "[*] Tạo whitelist.txt mặc định tại ${WHITELIST_FILE}"
 fi
@@ -196,4 +195,5 @@ echo "================= HOÀN TẤT ================="
 echo "Whitelist IP file: ${WHITELIST_FILE}"
 echo "Để thêm IP mới: echo 'x.x.x.x' >> ${WHITELIST_FILE} && pkill 3proxy && /usr/local/etc/3proxy/bin/3proxy ${CFG}"
 echo "Proxy list (ip:port): ${OUT}"
+
 
