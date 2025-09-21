@@ -3,11 +3,8 @@
 ## Bước 0.
 
 sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo
-
 sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo
-
 sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
-
 echo "sslverify=false" >> /etc/yum.conf
 
 ## Bước 1. Cấu hình địa chỉ IPv6 vào máy chủ bằng lệnh:
